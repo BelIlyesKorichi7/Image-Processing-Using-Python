@@ -1,0 +1,19 @@
+#Direct printing of the image shape that includes
+#the length of the image: 960 the width of the image: 720 and the number of layers or color channels: 3
+
+print(img.shape[:2])
+
+print(img.shape)
+
+#The value of the last pixel in the matrix can be displayed by locating it at the height and width of the image obtained earlier
+
+print(img[959, 719])
+
+#The value of the last pixel contains three values that represent its pixel value, respectively,
+#in each layer or color channel that makes up an image, and these are the three. We will display each value separately.
+
+print(img[959, 719, 0])
+
+print(img[959, 719, 1])
+
+print(img[959, 719, 2])
