@@ -1,0 +1,72 @@
+import numpy as np #We use these libraries to play and work with the concept of matrices, because the images require that,
+#and they also contain some mathematical statistical functions branching from them.
+
+import math # We use these libraries to do math operations on images if we need to
+
+#We use these libraries to handle images, read, load an image, save, copy, cut, display, and the like
+import matplotlib.pyplot as plt
+
+#We use these libraries to handle images, read, load an image, save, copy, cut, display, and the like
+from PIL import Image
+
+#We use this library to cut an image into a snippet and combine it randomly into a new image
+import random
+
+#Load and read the image from its location path and save it in a named variable img
+
+img = plt.imread("FB_IMG_15911232865783554.jpg")
+
+#Convert the image into matrix form to work on it directly and save it in another named variable img_array
+
+img_array = np.array(plt.imread("FB_IMG_15911232865783554.jpg"))
+
+#Modify the image display settings by disabling the display of the axes with the image
+
+plt.axis('off')
+
+#Display the real image {img} that we have not converted into a matrix
+
+plt.imshow(img)
+
+#Defines a function that calculates the histogram of any image in a dynamic way
+
+def image_histograme (input_img):
+    
+    #We already know that the values of a pixel in a confined image range from 0 to 256,
+
+
+    #so we create an array containing null values with a length of 256 elements.
+
+    img_values = [0]*256
+    
+    #We flatten the image matrix from a two-dimensional form to a one-dimensional form 
+
+    #in order to use a single loop to process the values
+
+    img_vect = input_img.flatten()
+    
+    #We use the loop to read the values. Whenever the value appears, 
+
+    #we add one to the value of the old one in its rank in the array of values that we created earlier.   
+
+    for pixel_value in img_vect:
+    
+       img_values[int(pixel_value)] += 1
+    
+    plt.subplot(1, 1, 1)
+
+    plt.hist(img_values) #Convert the obtained matrix into a histogram
+
+    plt.title('Image histograme') 
+
+#The gray level of an image can be calculated by summing the values of the red, blue and green
+
+#layers obtained previously using the channel pass method and dividing by three.
+
+gray_level_img = (blue_layer_img1[:,:,2] + green_layer_img1[:,:,1] + red_layer_img1[:,:,0])/3
+
+plt.imshow(gray_level_img, cmap="gray")  #View the obtained image by summing&dividing
+
+plt.show
+
+plt.imsave('imame moslim gray level img.png', gray_level_img, cmap="gray")
