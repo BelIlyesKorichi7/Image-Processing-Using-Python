@@ -1,0 +1,45 @@
+import numpy as np #We use these libraries to play and work with the concept of matrices, because the images require that,
+#and they also contain some mathematical statistical functions branching from them.
+
+import math # We use these libraries to do math operations on images if we need to
+
+#We use these libraries to handle images, read, load an image, save, copy, cut, display, and the like
+import matplotlib.pyplot as plt
+
+#We use these libraries to handle images, read, load an image, save, copy, cut, display, and the like
+from PIL import Image
+
+#We use this library to cut an image into a snippet and combine it randomly into a new image
+import random
+
+#Load and read the image from its location path and save it in a named variable img
+
+img = plt.imread("FB_IMG_15911232865783554.jpg")
+
+#Convert the image into matrix form to work on it directly and save it in another named variable img_array
+
+img_array = np.array(plt.imread("FB_IMG_15911232865783554.jpg"))
+
+#Modify the image display settings by disabling the display of the axes with the image
+
+plt.axis('off')
+
+#Display the real image {img} that we have not converted into a matrix
+
+plt.imshow(img)
+
+blue_layer_img1 = np.copy(img) #Copy the image from a true color image with a name img/blue_layer_img1
+
+for i in range(blue_layer_img1.shape[0]): #The first loop to advance vertically line by line
+    
+#to the end of the image (image height)
+    
+    for j in range(blue_layer_img1.shape[1]): #The second loop to advance horizontally, column by column, to the end of the image (image width)
+        
+        blue_layer_img1[i,j] = [0,0,img[i,j][2]] #To get the blue images, we adjust the pixel value of the green and red layer channels together to zero
+        
+plt.imshow(blue_layer_img1) #View the obtained image by separating channels
+
+plt.show        
+
+plt.imsave('imame moslim blue layer img1.png', blue_layer_img1) #Save an image
