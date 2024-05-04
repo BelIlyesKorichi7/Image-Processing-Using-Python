@@ -1,0 +1,103 @@
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+import matplotlib.image as mplimg
+
+from PIL import Image as pilimg
+
+from math import floor
+
+import math
+
+def return_filter_mediane_side_effect(path_img, filter_size, side_effect):
+    
+    #Load and read the image from its location path and save it in a named variable input_img
+    
+    input_img = pilimg.open(path_img)
+    
+    fs_x, fs_y = filter_size
+    
+    if(side_effect == "true" or side_effect == "True" or side_effect == 1):
+    
+        # Get the dimensions of the input image
+        
+        width, height = input_img.size
+
+        # Define the amount of padding (in pixels) to add fs_x //2, fs_y //2
+
+        # Define the color of the border to add
+        
+        border_color = (0, 0, 0)  # black
+    
+        output_side_effect = Image.new("RGB", (width + fs_x // 2, height + fs_x // 2), border_color)
+
+        # Copy the input image onto the output image, shifted by the padding amount
+        
+        for x in range(width):
+            
+            for y in range(height):
+            
+                # Get the color of the pixel at (x, y) in the input image
+            
+                pixel_color = input_img.getpixel((x, y))
+        
+                # Set the color of the corresponding pixel in the output image
+            
+                output_side_effect.putpixel((x + fs_x // 2, y + fs_y // 2), pixel_color)
+                
+        #Convert image to grayscale
+    
+        gray_level_img = np.array(output_side_effect.convert('L'))
+    
+        #Obtain the lengths of the input image in the gray level
+                
+    elif(side_effect == "false" or side_effect == "False" or side_effect == 0):
+        
+        #Convert image to grayscale
+    
+        gray_level_img = np.array(input_img.convert('L'))
+    
+        #Obtain the lengths of the input image in the gray level
+    
+    height, width = gray_level_img.shape[:2]
+    
+    #We reserve an empty template corresponding to the input image scales in the gray level
+    
+    #to which we assign the final optimized image pixel values
+    
+    output_img_result = np.zeros((height, width), dtype='u1')
+    
+    for y in range(width - fs_y):
+        
+        for x in range(height - fs_x):
+            
+            #The operations that take place in the two iterative loops are to take a partial matrix of the image, the gray level,
+            
+            #along the size of the individual filter entered by the user in each transition between the lines and columns of the image,
+            
+            sub_matrix = gray_level_img[x : x + fs_x, y : y + fs_y]
+            
+            #then we flatten the partial matrix and arrange it ascendingly,
+            
+            sorted_sub_matrix = np.sort(sub_matrix.flatten())
+            
+            #then take the pixel value that we get by dividing the length of the matrix Flat on two
+            
+            filtered_pixel_value = sorted_sub_matrix[(len(sorted_sub_matrix) // 2) + (len(sorted_sub_matrix) % 2)]
+            
+            #finaly the value of the latter we transfer to its coordinates in the blank template of the new output image
+            
+            output_img_result[x + 1, y + 1] = filtered_pixel_value
+            
+    fig, axs = plt.subplots(1, 2)
+
+    axs[0].imshow(gray_level_img, cmap='gray')
+
+    axs[0].set_title('Input')
+
+    axs[1].imshow(output_img_result, cmap='gray')
+
+    axs[1].set_title('Output')
+
+    plt.show()
