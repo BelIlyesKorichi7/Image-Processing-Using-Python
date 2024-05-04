@@ -1,0 +1,53 @@
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+import matplotlib.image as mplimg
+
+from PIL import Image as pilimg
+
+from math import floor
+
+import math
+
+def channel(path_img, channel='R'):
+    
+    #Load and read the image from its location path and save it in a named variable input_img
+    
+    input_img = pilimg.open(path_img)
+    
+    # Convert the image to RGB mode to access the individual R, G, and B channels
+    
+    img_array = np.array(input_img)
+    
+    channel_img = np.zeros(img_array.shape, dtype="uint8")
+    
+    # Extract the requested channel
+    
+    if channel == 'R' or channel == "r":
+        
+        channel_img[:,:,0] = img_array[:,:,0]  # The R channel is the first channel
+        
+    elif channel == 'G' or channel == "g":
+        
+        channel_img[:,:,1] = img_array[:,:,1]  # The G channel is the second channel
+        
+    elif channel == 'B' or channel == "b":
+        
+        channel_img[:,:,2] = img_array[:,:,2]  # The B channel is the third channel
+        
+    else:
+        
+        raise ValueError("The channel must be 'R', 'G', or 'B'")
+    
+    # Return the requested channel image
+    
+    plt.imshow(channel_img) #View the obtained image by connect channels and pass values
+
+    return plt.show
+
+channel("FB_IMG_15992225962312859.jpg", 'r')
+
+channel("FB_IMG_15992225962312859.jpg", 'g')
+
+channel("FB_IMG_15992225962312859.jpg", 'b')
